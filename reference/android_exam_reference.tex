@@ -1,0 +1,2350 @@
+\documentclass[11pt,a4paper]{book}
+
+% Packages
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{geometry}
+\geometry{a4paper, margin=1in}
+\usepackage{hyperref}
+\usepackage{cleveref}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{tcolorbox}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage{makeidx}
+\usepackage[toc]{glossaries}
+
+% Hyperref setup
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,
+    urlcolor=cyan,
+    pdftitle={Android Exam Reference - HotelAppRef},
+    pdfauthor={Mobile Dev Course},
+    bookmarks=true,
+}
+
+% Make index and glossary
+\makeindex
+\makeglossaries
+
+% Code listing styles
+\definecolor{codebg}{rgb}{0.95,0.95,0.95}
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+% Java style
+\lstdefinestyle{javastyle}{
+    language=Java,
+    backgroundcolor=\color{backcolour},
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{blue}\bfseries,
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=2,
+    frame=single,
+    rulecolor=\color{black}
+}
+
+% XML style
+\lstdefinestyle{xmlstyle}{
+    language=XML,
+    backgroundcolor=\color{backcolour},
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{blue}\bfseries,
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=2,
+    frame=single,
+    morekeywords={android,xmlns,tools,layout_width,layout_height}
+}
+
+% Gradle style
+\lstdefinestyle{gradlestyle}{
+    language=Groovy,
+    backgroundcolor=\color{backcolour},
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{blue}\bfseries,
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=2,
+    frame=single
+}
+
+% Default style
+\lstset{style=javastyle}
+
+% Glossary entries
+\newglossaryentry{activity}{
+    name=Activity,
+    description={A single screen with a user interface. The fundamental component of Android apps}
+}
+
+\newglossaryentry{intent}{
+    name=Intent,
+    description={A messaging object used to request an action from another app component}
+}
+
+\newglossaryentry{recyclerview}{
+    name=RecyclerView,
+    description={A flexible view for providing a limited window into a large data set}
+}
+
+\newglossaryentry{room}{
+    name=Room,
+    description={Persistence library that provides an abstraction layer over SQLite}
+}
+
+\newglossaryentry{viewbinding}{
+    name=ViewBinding,
+    description={Feature that generates binding classes for XML layouts, enabling type-safe view access}
+}
+
+\newglossaryentry{dao}{
+    name=DAO,
+    description={Data Access Object - interface defining database operations}
+}
+
+\newglossaryentry{manifest}{
+    name=Manifest,
+    description={AndroidManifest.xml file that describes essential information about the app}
+}
+
+% Header/Footer
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{Android Exam Reference}
+\lhead{\leftmark}
+\rfoot{Page \thepage}
+
+% Title page info
+\title{\Huge\textbf{Android Development}\\
+\Large Exam Reference Guide\\
+\vspace{1cm}
+\large HotelAppRef Application}
+\author{Mobile Development Course}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+
+\chapter*{Preface}
+\addcontentsline{toc}{chapter}{Preface}
+
+This reference guide is designed for open-book Android development exams. It contains:
+
+\begin{itemize}
+    \item Complete code examples from the HotelAppRef application
+    \item Annotated explanations of why each pattern works
+    \item Quick reference recipes for common tasks
+    \item Debugging tips and common gotchas
+\end{itemize}
+
+\textbf{How to use during exams:}
+\begin{enumerate}
+    \item Use the index and table of contents to quickly locate topics
+    \item Copy code snippets and adapt them to your needs
+    \item Pay attention to the ``WHY'' comments explaining each pattern
+    \item Check Appendix A for file path references
+\end{enumerate}
+
+\part{Zero to Run: Android Studio 101}
+
+\chapter{Android Studio Setup}
+\index{Android Studio!installation}
+
+\section{Installation Steps}
+
+\begin{enumerate}
+    \item Download Android Studio from \url{https://developer.android.com/studio}
+    \item Run the installer and follow the wizard
+    \item Install Android SDK (recommended: API 34)
+    \item Configure an Android Virtual Device (AVD)
+\end{enumerate}
+
+\section{Opening an Existing Project}
+
+\begin{tcolorbox}[title=Quick Steps]
+\begin{enumerate}
+    \item File → Open
+    \item Navigate to project root (contains \texttt{build.gradle.kts})
+    \item Click OK
+    \item Wait for Gradle sync (3-5 minutes first time)
+\end{enumerate}
+\end{tcolorbox}
+
+\section{Running Your App}
+\index{running app}
+
+\textbf{Method 1: Using the IDE}
+\begin{itemize}
+    \item Click green ▶ Run button (Shift+F10)
+    \item Select emulator or device
+    \item Wait for build and installation
+\end{itemize}
+
+\textbf{Method 2: Command Line}
+\begin{lstlisting}[style=gradlestyle, caption=Build from terminal, label=lst:gradlebuild]
+./gradlew assembleDebug
+# APK: app/build/outputs/apk/debug/app-debug.apk
+\end{lstlisting}
+
+\section{Android Virtual Device (AVD)}
+\index{AVD}
+
+\textbf{Creating an Emulator:}
+\begin{enumerate}
+    \item Tools → Device Manager
+    \item Create Device
+    \item Select hardware (Pixel 5 recommended)
+    \item Select system image (API 34 recommended)
+    \item Finish
+\end{enumerate}
+
+\section{Logcat: Reading App Logs}
+\index{Logcat}
+
+View → Tool Windows → Logcat
+
+\textbf{Log Levels:}
+\begin{itemize}
+    \item \textcolor{red}{E (Error)}: Critical errors
+    \item \textcolor{orange}{W (Warning)}: Potential issues
+    \item \textcolor{blue}{I (Info)}: Informational messages
+    \item \textcolor{gray}{D (Debug)}: Debug messages
+\end{itemize}
+
+\textbf{Filtering logs:}
+\begin{lstlisting}[style=javastyle, caption=Using Log in code]
+// path: app/src/main/java/.../MainActivity.java
+import android.util.Log;
+
+private static final String TAG = "MainActivity";
+
+@Override
+protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    Log.d(TAG, "onCreate called");
+}
+\end{lstlisting}
+
+\section{Debugging with Breakpoints}
+\index{debugging}
+
+\begin{enumerate}
+    \item Click left gutter next to line number to set breakpoint (red dot)
+    \item Click Debug button (Shift+F9) instead of Run
+    \item App pauses at breakpoint
+    \item Inspect variables in Debug window
+    \item Use Step Over (F8), Step Into (F7), Resume (F9)
+\end{enumerate}
+
+\chapter{Gradle Basics}
+\index{Gradle}
+
+\section{Understanding Gradle Files}
+
+Gradle is the build system for Android. Two key files:
+
+\begin{enumerate}
+    \item \textbf{build.gradle.kts (Project level)} - Project-wide configuration
+    \item \textbf{app/build.gradle.kts (Module level)} - App-specific config
+\end{enumerate}
+
+\subsection{Project-level build.gradle.kts}
+
+\begin{lstlisting}[style=gradlestyle, caption=Project build.gradle.kts, label=lst:projectgradle]
+// path: build.gradle.kts
+plugins {
+    alias(libs.plugins.android.application) apply false
+}
+\end{lstlisting}
+
+\subsection{App-level build.gradle.kts}
+
+\begin{lstlisting}[style=gradlestyle, caption=App build.gradle.kts, label=lst:appgradle]
+// path: app/build.gradle.kts
+plugins {
+    id("com.android.application")
+}
+
+android {
+    namespace = "com.example.hotelappref"
+    compileSdk = 34  // SDK version for compilation
+
+    defaultConfig {
+        applicationId = "com.example.hotelappref"  // Unique app ID
+        minSdk = 24      // Minimum Android version (7.0)
+        targetSdk = 34   // Target Android version (14)
+        versionCode = 1
+        versionName = "1.0"
+    }
+
+    buildFeatures {
+        viewBinding = true  // Enable ViewBinding
+    }
+}
+
+dependencies {
+    // AndroidX Core
+    implementation("androidx.appcompat:appcompat:1.6.1")
+    implementation("com.google.android.material:material:1.11.0")
+
+    // RecyclerView
+    implementation("androidx.recyclerview:recyclerview:1.3.2")
+
+    // Room Database
+    implementation("androidx.room:room-runtime:2.6.1")
+    annotationProcessor("androidx.room:room-compiler:2.6.1")
+}
+\end{lstlisting}
+
+\section{Common Gradle Tasks}
+
+\begin{lstlisting}[style=gradlestyle, caption=Gradle commands]
+./gradlew clean          # Clean build artifacts
+./gradlew assembleDebug  # Build debug APK
+./gradlew assembleRelease  # Build release APK
+./gradlew installDebug   # Install debug APK on device
+\end{lstlisting}
+
+\section{Syncing Gradle}
+
+When you modify \texttt{build.gradle.kts}:
+\begin{enumerate}
+    \item Click "Sync Now" in notification bar
+    \item Or: File → Sync Project with Gradle Files
+\end{enumerate}
+
+\part{Core Android (Java) Recipes}
+
+\chapter{Activities \& Lifecycle}
+\index{Activity!lifecycle}
+
+\section{Activity Lifecycle Overview}
+
+An Activity goes through several states:
+
+\begin{center}
+\texttt{onCreate() → onStart() → onResume() → [RUNNING] → onPause() → onStop() → onDestroy()}
+\end{center}
+
+\subsection{Key Lifecycle Methods}
+
+\begin{lstlisting}[style=javastyle, caption=Activity lifecycle methods, label=lst:lifecycle]
+// path: app/src/main/java/com/example/hotelappref/MainActivity.java
+public class MainActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // Initialize UI, set content view
+        // Called when activity is created
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        // Activity becomes visible
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // Activity starts interacting with user
+        // Start animations, acquire resources
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        // Activity losing focus
+        // Save data, pause animations
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        // Activity no longer visible
+        // Release resources
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        // Activity being destroyed
+        // Final cleanup
+    }
+}
+\end{lstlisting}
+
+\subsection{Saving Instance State}
+\index{Activity!state}
+
+Handle configuration changes (rotation):
+
+\begin{lstlisting}[style=javastyle, caption=Saving state, label=lst:savestate]
+// path: app/src/main/java/.../MainActivity.java
+@Override
+protected void onSaveInstanceState(Bundle outState) {
+    super.onSaveInstanceState(outState);
+    // Save data before activity is destroyed
+    outState.putString("key", "value");
+    outState.putInt("count", counter);
+}
+
+@Override
+protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+
+    if (savedInstanceState != null) {
+        // Restore saved data
+        String value = savedInstanceState.getString("key");
+        int count = savedInstanceState.getInt("count");
+    }
+}
+\end{lstlisting}
+
+\section{Creating an Activity}
+
+\textbf{Step 1:} Create Java class extending \texttt{AppCompatActivity}
+
+\textbf{Step 2:} Create layout XML
+
+\textbf{Step 3:} Register in AndroidManifest.xml
+
+\begin{lstlisting}[style=javastyle, caption=Basic Activity, label=lst:basicactivity]
+// path: app/src/main/java/com/example/hotelappref/MainActivity.java
+package com.example.hotelappref;
+
+import android.os.Bundle;
+import androidx.appcompat.app.AppCompatActivity;
+
+public class MainActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+    }
+}
+\end{lstlisting}
+
+\begin{lstlisting}[style=xmlstyle, caption=Registering in Manifest, label=lst:manifestactivity]
+<!-- path: app/src/main/AndroidManifest.xml -->
+<activity
+    android:name=".MainActivity"
+    android:exported="true">
+    <intent-filter>
+        <action android:name="android.intent.action.MAIN" />
+        <category android:name="android.intent.category.LAUNCHER" />
+    </intent-filter>
+</activity>
+\end{lstlisting}
+
+\chapter{Intents: Navigating Between Activities}
+\index{Intent}
+
+\section{Explicit Intents}
+
+Navigate to specific activity:
+
+\begin{lstlisting}[style=javastyle, caption=Starting another activity, label=lst:explicitintent]
+// path: app/src/main/java/.../MainActivity.java
+Intent intent = new Intent(MainActivity.this, AddHotelActivity.class);
+startActivity(intent);
+\end{lstlisting}
+
+\subsection{Passing Data with Intent}
+
+\begin{lstlisting}[style=javastyle, caption=Passing data, label=lst:intentdata]
+// Sender (MainActivity)
+Intent intent = new Intent(this, DetailsActivity.class);
+intent.putExtra("hotel_name", "Grand Plaza");
+intent.putExtra("hotel_id", 123);
+startActivity(intent);
+
+// Receiver (DetailsActivity)
+@Override
+protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+
+    Intent intent = getIntent();
+    String name = intent.getStringExtra("hotel_name");
+    int id = intent.getIntExtra("hotel_id", -1);
+}
+\end{lstlisting}
+
+\subsection{Passing Objects}
+
+Object must implement \texttt{Serializable} or \texttt{Parcelable}:
+
+\begin{lstlisting}[style=javastyle, caption=Passing objects, label=lst:intentobject]
+// Hotel class implements Serializable
+public class Hotel implements Serializable {
+    // ... fields
+}
+
+// Sender
+Hotel hotel = new Hotel(...);
+intent.putExtra("hotel", hotel);
+
+// Receiver
+Hotel hotel = (Hotel) getIntent().getSerializableExtra("hotel");
+\end{lstlisting}
+
+\section{Activity Results}
+\index{Activity!results}
+
+Modern way using \texttt{ActivityResultLauncher}:
+
+\begin{lstlisting}[style=javastyle, caption=Activity results, label=lst:activityresult]
+// path: app/src/main/java/.../MainActivity.java
+public class MainActivity extends AppCompatActivity {
+
+    private ActivityResultLauncher<Intent> addHotelLauncher;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        // Register launcher
+        addHotelLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                if (result.getResultCode() == RESULT_OK) {
+                    // Success! Handle result
+                    Toast.makeText(this, "Hotel added!", Toast.LENGTH_SHORT).show();
+                }
+            }
+        );
+
+        // Launch activity
+        button.setOnClickListener(v -> {
+            Intent intent = new Intent(this, AddHotelActivity.class);
+            addHotelLauncher.launch(intent);
+        });
+    }
+}
+
+// In AddHotelActivity
+private void saveHotel() {
+    // ... save logic
+    setResult(RESULT_OK);  // Signal success
+    finish();  // Close activity
+}
+\end{lstlisting}
+
+\section{Implicit Intents}
+\index{Intent!implicit}
+
+Request actions from other apps:
+
+\begin{lstlisting}[style=javastyle, caption=Implicit intents, label=lst:implicitintent]
+// Open URL
+Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://example.com"));
+startActivity(browserIntent);
+
+// Make phone call (requires CALL_PHONE permission)
+Intent callIntent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:+9611234567"));
+startActivity(callIntent);
+
+// Send email
+Intent emailIntent = new Intent(Intent.ACTION_SENDTO);
+emailIntent.setData(Uri.parse("mailto:test@example.com"));
+emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Subject");
+emailIntent.putExtra(Intent.EXTRA_TEXT, "Email body");
+startActivity(Intent.createChooser(emailIntent, "Send email"));
+
+// Share text
+Intent shareIntent = new Intent(Intent.ACTION_SEND);
+shareIntent.setType("text/plain");
+shareIntent.putExtra(Intent.EXTRA_TEXT, "Check out this hotel!");
+startActivity(Intent.createChooser(shareIntent, "Share via"));
+\end{lstlisting}
+
+\chapter{Views, Layouts \& Resources}
+\index{View}\index{Layout}
+
+\section{Common Views}
+
+\subsection{TextView}
+
+\begin{lstlisting}[style=xmlstyle, caption=TextView, label=lst:textview]
+<!-- path: app/src/main/res/layout/activity_main.xml -->
+<TextView
+    android:id="@+id/textView"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="@string/app_name"
+    android:textSize="24sp"
+    android:textColor="@color/black"
+    android:textStyle="bold" />
+\end{lstlisting}
+
+\subsection{EditText}
+
+\begin{lstlisting}[style=xmlstyle, caption=EditText, label=lst:edittext]
+<EditText
+    android:id="@+id/editName"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:hint="Enter hotel name"
+    android:inputType="textCapWords"
+    android:maxLines="1" />
+\end{lstlisting}
+
+\subsection{Button}
+
+\begin{lstlisting}[style=xmlstyle, caption=Button, label=lst:button]
+<Button
+    android:id="@+id/btnSave"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="@string/save"
+    android:backgroundTint="@color/colorPrimary" />
+\end{lstlisting}
+
+\section{Layout Types}
+
+\subsection{LinearLayout}
+\index{LinearLayout}
+
+Arranges children in single row/column:
+
+\begin{lstlisting}[style=xmlstyle, caption=LinearLayout vertical, label=lst:linearlayout]
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView ... />
+    <EditText ... />
+    <Button ... />
+</LinearLayout>
+\end{lstlisting}
+
+\subsection{ConstraintLayout}
+\index{ConstraintLayout}
+
+Flexible positioning with constraints:
+
+\begin{lstlisting}[style=xmlstyle, caption=ConstraintLayout, label=lst:constraintlayout]
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/title"
+        app:layout_constraintStart_toStartOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>
+\end{lstlisting}
+
+\section{Resource Files}
+\index{resources}
+
+\subsection{strings.xml}
+
+\begin{lstlisting}[style=xmlstyle, caption=String resources, label=lst:strings]
+<!-- path: app/src/main/res/values/strings.xml -->
+<resources>
+    <string name="app_name">HotelApp</string>
+    <string name="save">Save</string>
+    <string name="cancel">Cancel</string>
+    <string name="error_required">This field is required</string>
+</resources>
+\end{lstlisting}
+
+Usage in Java:
+\begin{lstlisting}[style=javastyle]
+String appName = getString(R.string.app_name);
+textView.setText(R.string.app_name);
+\end{lstlisting}
+
+\subsection{colors.xml}
+
+\begin{lstlisting}[style=xmlstyle, caption=Color resources, label=lst:colors]
+<!-- path: app/src/main/res/values/colors.xml -->
+<resources>
+    <color name="colorPrimary">#6200EE</color>
+    <color name="colorSecondary">#03DAC6</color>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+</resources>
+\end{lstlisting}
+
+\subsection{dimens.xml}
+
+\begin{lstlisting}[style=xmlstyle, caption=Dimension resources]
+<!-- path: app/src/main/res/values/dimens.xml -->
+<resources>
+    <dimen name="padding_small">8dp</dimen>
+    <dimen name="padding_normal">16dp</dimen>
+    <dimen name="padding_large">24dp</dimen>
+    <dimen name="text_size_normal">16sp</dimen>
+</resources>
+\end{lstlisting}
+
+\chapter{RecyclerView \& Adapters}
+\index{RecyclerView}
+
+RecyclerView displays large datasets efficiently using the ViewHolder pattern.
+
+\section{Complete RecyclerView Implementation}
+
+\subsection{Step 1: Add Dependency}
+
+Already in \texttt{app/build.gradle.kts}:
+\begin{lstlisting}[style=gradlestyle]
+implementation("androidx.recyclerview:recyclerview:1.3.2")
+\end{lstlisting}
+
+\subsection{Step 2: Add to Layout}
+
+\begin{lstlisting}[style=xmlstyle, caption=RecyclerView in layout, label=lst:recyclerviewxml]
+<!-- path: app/src/main/res/layout/activity_main.xml -->
+<androidx.recyclerview.widget.RecyclerView
+    android:id="@+id/recyclerView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="8dp" />
+\end{lstlisting}
+
+\subsection{Step 3: Create Item Layout}
+
+\begin{lstlisting}[style=xmlstyle, caption=Item layout, label=lst:itemlayout]
+<!-- path: app/src/main/res/layout/hotel_item.xml -->
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="4dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="16dp">
+
+        <ImageView
+            android:id="@+id/hotelImage"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:src="@mipmap/ic_launcher" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginStart="16dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/hotelName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/hotelLocation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:layout_marginTop="4dp" />
+        </LinearLayout>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>
+\end{lstlisting}
+
+\subsection{Step 4: Create Adapter}
+
+\begin{lstlisting}[style=javastyle, caption=RecyclerView Adapter, label=lst:adapter]
+// path: app/src/main/java/.../adapters/HotelAdapter.java
+package com.example.hotelappref.adapters;
+
+import android.content.Context;
+import android.content.Intent;
+import android.view.LayoutInflater;
+import android.view.ViewGroup;
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+import com.example.hotelappref.HotelDetailsActivity;
+import com.example.hotelappref.databinding.HotelItemBinding;
+import com.example.hotelappref.models.Hotel;
+import java.util.List;
+
+public class HotelAdapter extends RecyclerView.Adapter<HotelAdapter.HotelViewHolder> {
+
+    private final Context context;
+    private final List<Hotel> hotelList;
+
+    public HotelAdapter(Context context, List<Hotel> hotelList) {
+        this.context = context;
+        this.hotelList = hotelList;
+    }
+
+    @NonNull
+    @Override
+    public HotelViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        // Inflate item layout using ViewBinding
+        HotelItemBinding binding = HotelItemBinding.inflate(
+            LayoutInflater.from(parent.getContext()),
+            parent,
+            false
+        );
+        return new HotelViewHolder(binding);
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull HotelViewHolder holder, int position) {
+        Hotel hotel = hotelList.get(position);
+        holder.bind(hotel);
+    }
+
+    @Override
+    public int getItemCount() {
+        return hotelList != null ? hotelList.size() : 0;
+    }
+
+    class HotelViewHolder extends RecyclerView.ViewHolder {
+        private final HotelItemBinding binding;
+
+        public HotelViewHolder(HotelItemBinding binding) {
+            super(binding.getRoot());
+            this.binding = binding;
+        }
+
+        public void bind(final Hotel hotel) {
+            // Set data to views
+            binding.hotelName.setText(hotel.getName());
+            binding.hotelLocation.setText(hotel.getLocation());
+            binding.hotelImage.setImageResource(hotel.getImageResource());
+
+            // Handle click
+            binding.getRoot().setOnClickListener(v -> {
+                Intent intent = new Intent(context, HotelDetailsActivity.class);
+                intent.putExtra("hotel", hotel);
+                context.startActivity(intent);
+            });
+        }
+    }
+}
+\end{lstlisting}
+
+\subsection{Step 5: Setup in Activity}
+
+\begin{lstlisting}[style=javastyle, caption=Using RecyclerView, label=lst:recyclerviewusage]
+// path: app/src/main/java/.../MainActivity.java
+public class MainActivity extends AppCompatActivity {
+
+    private RecyclerView recyclerView;
+    private HotelAdapter adapter;
+    private List<Hotel> hotelList;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        // Setup RecyclerView
+        recyclerView = findViewById(R.id.recyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setHasFixedSize(true);
+
+        // Prepare data
+        hotelList = new ArrayList<>();
+        // ... add hotels to list
+
+        // Setup adapter
+        adapter = new HotelAdapter(this, hotelList);
+        recyclerView.setAdapter(adapter);
+    }
+
+    // Notify adapter of changes
+    private void addHotel(Hotel hotel) {
+        hotelList.add(hotel);
+        adapter.notifyItemInserted(hotelList.size() - 1);
+    }
+}
+\end{lstlisting}
+
+\section{Updating RecyclerView}
+
+\begin{lstlisting}[style=javastyle, caption=Adapter notifications]
+// Notify all data changed
+adapter.notifyDataSetChanged();
+
+// Efficient updates
+adapter.notifyItemInserted(position);
+adapter.notifyItemRemoved(position);
+adapter.notifyItemChanged(position);
+adapter.notifyItemRangeInserted(start, count);
+\end{lstlisting}
+
+\chapter{ViewBinding}
+\index{ViewBinding}
+
+ViewBinding generates a binding class for each XML layout, providing type-safe access to views.
+
+\section{Enable ViewBinding}
+
+In \texttt{app/build.gradle.kts}:
+\begin{lstlisting}[style=gradlestyle]
+android {
+    buildFeatures {
+        viewBinding = true
+    }
+}
+\end{lstlisting}
+
+\section{Using ViewBinding in Activity}
+
+\begin{lstlisting}[style=javastyle, caption=ViewBinding in Activity, label=lst:viewbinding]
+// path: app/src/main/java/.../MainActivity.java
+public class MainActivity extends AppCompatActivity {
+
+    private ActivityMainBinding binding;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        // Inflate binding
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
+
+        // Set content view using binding root
+        setContentView(binding.getRoot());
+
+        // Access views type-safely (no findViewById!)
+        binding.textView.setText("Hello");
+        binding.button.setOnClickListener(v -> {
+            // Handle click
+        });
+    }
+}
+\end{lstlisting}
+
+\textbf{WHY ViewBinding?}
+\begin{itemize}
+    \item \textbf{Type safety}: No ClassCastException
+    \item \textbf{Null safety}: Only views in layout are accessible
+    \item \textbf{Better performance}: No findViewById lookups at runtime
+\end{itemize}
+
+\section{ViewBinding in Fragment}
+
+\begin{lstlisting}[style=javastyle, caption=ViewBinding in Fragment]
+public class MyFragment extends Fragment {
+
+    private FragmentMyBinding binding;
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        binding = FragmentMyBinding.inflate(inflater, container, false);
+        return binding.getRoot();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;  // Prevent memory leaks
+    }
+}
+\end{lstlisting}
+
+\chapter{Menus, Toasts \& Snackbars}
+\index{Menu}\index{Toast}\index{Snackbar}
+
+\section{Options Menu}
+
+\subsection{Create Menu Resource}
+
+\begin{lstlisting}[style=xmlstyle, caption=Menu XML, label=lst:menu]
+<!-- path: app/src/main/res/menu/main_menu.xml -->
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/action_search"
+        android:icon="@android:drawable/ic_menu_search"
+        android:title="Search"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/action_settings"
+        android:title="Settings"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_about"
+        android:title="About"
+        app:showAsAction="never" />
+</menu>
+\end{lstlisting}
+
+\subsection{Inflate and Handle Menu}
+
+\begin{lstlisting}[style=javastyle, caption=Menu in Activity, label=lst:menuactivity]
+// path: app/src/main/java/.../MainActivity.java
+@Override
+public boolean onCreateOptionsMenu(Menu menu) {
+    getMenuInflater().inflate(R.menu.main_menu, menu);
+    return true;
+}
+
+@Override
+public boolean onOptionsItemSelected(MenuItem item) {
+    int id = item.getItemId();
+
+    if (id == R.id.action_search) {
+        // Handle search
+        Toast.makeText(this, "Search clicked", Toast.LENGTH_SHORT).show();
+        return true;
+    } else if (id == R.id.action_settings) {
+        // Open settings
+        startActivity(new Intent(this, SettingsActivity.class));
+        return true;
+    } else if (id == R.id.action_about) {
+        // Show about dialog
+        showAboutDialog();
+        return true;
+    }
+
+    return super.onOptionsItemSelected(item);
+}
+\end{lstlisting}
+
+\section{Toast Messages}
+\index{Toast}
+
+Quick, non-intrusive messages:
+
+\begin{lstlisting}[style=javastyle, caption=Toast examples, label=lst:toast]
+// Short toast (2 seconds)
+Toast.makeText(this, "Item saved", Toast.LENGTH_SHORT).show();
+
+// Long toast (3.5 seconds)
+Toast.makeText(this, "Item deleted", Toast.LENGTH_LONG).show();
+
+// Custom position
+Toast toast = Toast.makeText(this, "Message", Toast.LENGTH_SHORT);
+toast.setGravity(Gravity.TOP | Gravity.CENTER, 0, 0);
+toast.show();
+\end{lstlisting}
+
+\section{Snackbar}
+\index{Snackbar}
+
+Material Design message with optional action:
+
+\begin{lstlisting}[style=javastyle, caption=Snackbar examples, label=lst:snackbar]
+// Simple snackbar
+Snackbar.make(view, "Item deleted", Snackbar.LENGTH_SHORT).show();
+
+// Snackbar with action
+Snackbar.make(view, "Item deleted", Snackbar.LENGTH_LONG)
+    .setAction("UNDO", v -> {
+        // Restore deleted item
+    })
+    .show();
+
+// Custom colors
+Snackbar snackbar = Snackbar.make(view, "Message", Snackbar.LENGTH_SHORT);
+snackbar.setBackgroundTint(Color.RED);
+snackbar.setTextColor(Color.WHITE);
+snackbar.show();
+\end{lstlisting}
+
+\chapter{Dialogs}
+\index{Dialog}
+
+\section{AlertDialog}
+
+\begin{lstlisting}[style=javastyle, caption=AlertDialog examples, label=lst:alertdialog]
+// Simple alert
+new AlertDialog.Builder(this)
+    .setTitle("Delete Hotel")
+    .setMessage("Are you sure you want to delete this hotel?")
+    .setPositiveButton("Delete", (dialog, which) -> {
+        // Delete hotel
+    })
+    .setNegativeButton("Cancel", null)
+    .show();
+
+// List dialog
+String[] items = {"Option 1", "Option 2", "Option 3"};
+new AlertDialog.Builder(this)
+    .setTitle("Choose an option")
+    .setItems(items, (dialog, which) -> {
+        Toast.makeText(this, "Selected: " + items[which], Toast.LENGTH_SHORT).show();
+    })
+    .show();
+
+// Single choice dialog
+new AlertDialog.Builder(this)
+    .setTitle("Select category")
+    .setSingleChoiceItems(items, 0, (dialog, which) -> {
+        // Handle selection
+    })
+    .setPositiveButton("OK", (dialog, which) -> {
+        // Confirm selection
+    })
+    .show();
+
+// Multi-choice dialog
+boolean[] checkedItems = {false, false, false};
+new AlertDialog.Builder(this)
+    .setTitle("Select multiple")
+    .setMultiChoiceItems(items, checkedItems, (dialog, which, isChecked) -> {
+        checkedItems[which] = isChecked;
+    })
+    .setPositiveButton("OK", null)
+    .show();
+\end{lstlisting}
+
+\chapter{Form Validation}
+\index{validation}
+
+\section{EditText Validation}
+
+\begin{lstlisting}[style=javastyle, caption=Form validation, label=lst:validation]
+// path: app/src/main/java/.../AddHotelActivity.java
+private void saveHotel() {
+    // Get input
+    String name = binding.editName.getText().toString().trim();
+    String phone = binding.editPhone.getText().toString().trim();
+
+    // Validate name
+    if (TextUtils.isEmpty(name)) {
+        binding.editName.setError("Name is required");
+        binding.editName.requestFocus();
+        return;
+    }
+
+    // Validate phone
+    if (TextUtils.isEmpty(phone)) {
+        binding.editPhone.setError("Phone is required");
+        binding.editPhone.requestFocus();
+        return;
+    }
+
+    // Validate email format
+    if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+        binding.editEmail.setError("Invalid email");
+        binding.editEmail.requestFocus();
+        return;
+    }
+
+    // Validate phone format
+    if (!android.util.Patterns.PHONE.matcher(phone).matches()) {
+        binding.editPhone.setError("Invalid phone number");
+        binding.editPhone.requestFocus();
+        return;
+    }
+
+    // All valid - proceed
+    saveToDatabase();
+}
+\end{lstlisting}
+
+\section{Common Validation Patterns}
+
+\begin{lstlisting}[style=javastyle, caption=Validation utilities]
+// Check if empty
+if (TextUtils.isEmpty(text)) { }
+
+// Minimum length
+if (text.length() < 6) {
+    editText.setError("Minimum 6 characters");
+}
+
+// Email validation
+if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) { }
+
+// Phone validation
+if (!Patterns.PHONE.matcher(phone).matches()) { }
+
+// URL validation
+if (!Patterns.WEB_URL.matcher(url).matches()) { }
+
+// Numeric validation
+try {
+    int value = Integer.parseInt(text);
+} catch (NumberFormatException e) {
+    editText.setError("Must be a number");
+}
+
+// Match two fields (e.g., confirm password)
+if (!password.equals(confirmPassword)) {
+    binding.editConfirmPassword.setError("Passwords don't match");
+}
+\end{lstlisting}
+
+\chapter{Permissions}
+\index{permissions}
+
+\section{Declaring Permissions}
+
+In \texttt{AndroidManifest.xml}:
+
+\begin{lstlisting}[style=xmlstyle, caption=Permission declaration, label=lst:permissions]
+<!-- path: app/src/main/AndroidManifest.xml -->
+<manifest ...>
+    <!-- Internet permission (no runtime request needed) -->
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <!-- Dangerous permissions (require runtime request) -->
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+    <application ...>
+    </application>
+</manifest>
+\end{lstlisting}
+
+\section{Runtime Permissions}
+
+For dangerous permissions (API 23+):
+
+\begin{lstlisting}[style=javastyle, caption=Runtime permission, label=lst:runtimepermission]
+// Check if permission granted
+if (ContextCompat.checkSelfPermission(this,
+        Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED) {
+    // Permission already granted
+    makePhoneCall();
+} else {
+    // Request permission
+    ActivityCompat.requestPermissions(this,
+        new String[]{Manifest.permission.CALL_PHONE},
+        REQUEST_CALL_PHONE);
+}
+
+// Handle permission result
+@Override
+public void onRequestPermissionsResult(int requestCode,
+        String[] permissions, int[] grantResults) {
+    super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+    if (requestCode == REQUEST_CALL_PHONE) {
+        if (grantResults.length > 0 &&
+                grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            // Permission granted
+            makePhoneCall();
+        } else {
+            // Permission denied
+            Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show();
+        }
+    }
+}
+\end{lstlisting}
+
+\chapter{Storage: Room Database}
+\index{Room}
+
+Room is Android's recommended database library, providing an abstraction over SQLite.
+
+\section{Setup Room}
+
+\subsection{Add Dependencies}
+
+\begin{lstlisting}[style=gradlestyle, caption=Room dependencies]
+// path: app/build.gradle.kts
+dependencies {
+    implementation("androidx.room:room-runtime:2.6.1")
+    annotationProcessor("androidx.room:room-compiler:2.6.1")
+}
+\end{lstlisting}
+
+\section{Room Components}
+
+\subsection{1. Entity (Model)}
+
+\begin{lstlisting}[style=javastyle, caption=Room Entity, label=lst:entity]
+// path: app/src/main/java/.../models/Hotel.java
+package com.example.hotelappref.models;
+
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+import java.io.Serializable;
+
+@Entity(tableName = "hotels")
+public class Hotel implements Serializable {
+
+    @PrimaryKey(autoGenerate = true)
+    private long id;
+
+    private String name;
+    private String phone;
+    private String website;
+    private String location;
+    private String nearby;
+    private String food;
+    private int imageResource;
+
+    public Hotel(String name, String phone, String website,
+                 String location, String nearby, String food, int imageResource) {
+        this.name = name;
+        this.phone = phone;
+        this.website = website;
+        this.location = location;
+        this.nearby = nearby;
+        this.food = food;
+        this.imageResource = imageResource;
+    }
+
+    // Getters and setters
+    public long getId() { return id; }
+    public void setId(long id) { this.id = id; }
+
+    public String getName() { return name; }
+    public void setName(String name) { this.name = name; }
+
+    // ... other getters/setters
+}
+\end{lstlisting}
+
+\subsection{2. DAO (Data Access Object)}
+
+\begin{lstlisting}[style=javastyle, caption=Room DAO, label=lst:dao]
+// path: app/src/main/java/.../database/HotelDao.java
+package com.example.hotelappref.database;
+
+import androidx.room.Dao;
+import androidx.room.Delete;
+import androidx.room.Insert;
+import androidx.room.Query;
+import androidx.room.Update;
+import com.example.hotelappref.models.Hotel;
+import java.util.List;
+
+@Dao
+public interface HotelDao {
+
+    @Insert
+    long insert(Hotel hotel);
+
+    @Update
+    void update(Hotel hotel);
+
+    @Delete
+    void delete(Hotel hotel);
+
+    @Query("SELECT * FROM hotels ORDER BY name ASC")
+    List<Hotel> getAllHotels();
+
+    @Query("SELECT * FROM hotels WHERE id = :hotelId")
+    Hotel getHotelById(long hotelId);
+
+    @Query("SELECT * FROM hotels WHERE name LIKE '%' || :searchQuery || '%' ORDER BY name ASC")
+    List<Hotel> searchHotelsByName(String searchQuery);
+
+    @Query("DELETE FROM hotels")
+    void deleteAllHotels();
+
+    @Query("SELECT COUNT(*) FROM hotels")
+    int getHotelCount();
+}
+\end{lstlisting}
+
+\subsection{3. Database Class}
+
+\begin{lstlisting}[style=javastyle, caption=Room Database, label=lst:database]
+// path: app/src/main/java/.../database/AppDatabase.java
+package com.example.hotelappref.database;
+
+import android.content.Context;
+import androidx.room.Database;
+import androidx.room.Room;
+import androidx.room.RoomDatabase;
+import com.example.hotelappref.models.Hotel;
+
+@Database(entities = {Hotel.class}, version = 1, exportSchema = false)
+public abstract class AppDatabase extends RoomDatabase {
+
+    public abstract HotelDao hotelDao();
+
+    private static volatile AppDatabase INSTANCE;
+
+    public static AppDatabase getInstance(Context context) {
+        if (INSTANCE == null) {
+            synchronized (AppDatabase.class) {
+                if (INSTANCE == null) {
+                    INSTANCE = Room.databaseBuilder(
+                        context.getApplicationContext(),
+                        AppDatabase.class,
+                        "hotel_database"
+                    )
+                    .allowMainThreadQueries()  // For simplicity; use background thread in production
+                    .build();
+                }
+            }
+        }
+        return INSTANCE;
+    }
+}
+\end{lstlisting}
+
+\section{Using Room in Activity}
+
+\begin{lstlisting}[style=javastyle, caption=Using Room, label=lst:roomusage]
+// path: app/src/main/java/.../MainActivity.java
+public class MainActivity extends AppCompatActivity {
+
+    private AppDatabase database;
+    private HotelDao hotelDao;
+    private List<Hotel> hotelList;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        // Get database instance
+        database = AppDatabase.getInstance(this);
+        hotelDao = database.hotelDao();
+
+        // Load data
+        loadHotelsFromDatabase();
+    }
+
+    private void loadHotelsFromDatabase() {
+        hotelList = new ArrayList<>(hotelDao.getAllHotels());
+    }
+
+    private void addHotel() {
+        Hotel hotel = new Hotel("Grand Plaza", "+9611234567",
+            "www.grandplaza.com", "Beirut", "Downtown",
+            "Lebanese Cuisine", R.mipmap.ic_launcher);
+
+        long id = hotelDao.insert(hotel);
+        Toast.makeText(this, "Hotel added with ID: " + id, Toast.LENGTH_SHORT).show();
+    }
+
+    private void updateHotel(Hotel hotel) {
+        hotel.setName("Updated Name");
+        hotelDao.update(hotel);
+    }
+
+    private void deleteHotel(Hotel hotel) {
+        hotelDao.delete(hotel);
+    }
+
+    private void searchHotels(String query) {
+        List<Hotel> results = hotelDao.searchHotelsByName(query);
+        // Update UI with results
+    }
+}
+\end{lstlisting}
+
+\section{SharedPreferences}
+\index{SharedPreferences}
+
+For simple key-value storage:
+
+\begin{lstlisting}[style=javastyle, caption=SharedPreferences, label=lst:sharedprefs]
+// Save data
+SharedPreferences prefs = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+SharedPreferences.Editor editor = prefs.edit();
+editor.putString("username", "john_doe");
+editor.putInt("user_id", 123);
+editor.putBoolean("is_logged_in", true);
+editor.apply();  // async save
+
+// Read data
+String username = prefs.getString("username", "");  // default ""
+int userId = prefs.getInt("user_id", -1);  // default -1
+boolean isLoggedIn = prefs.getBoolean("is_logged_in", false);
+
+// Remove key
+editor.remove("username");
+editor.apply();
+
+// Clear all
+editor.clear();
+editor.apply();
+\end{lstlisting}
+
+\chapter{Themes, Colors \& Styles}
+\index{themes}\index{styles}
+
+\section{themes.xml}
+
+\begin{lstlisting}[style=xmlstyle, caption=Theme definition, label=lst:themes]
+<!-- path: app/src/main/res/values/themes.xml -->
+<resources>
+    <style name="Base.Theme.HotelAppRef" parent="Theme.Material3.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorSecondary">@color/colorSecondary</item>
+        <item name="android:statusBarColor">@color/colorPrimary</item>
+    </style>
+
+    <style name="Theme.HotelAppRef" parent="Base.Theme.HotelAppRef" />
+</resources>
+\end{lstlisting}
+
+\section{Custom Styles}
+
+\begin{lstlisting}[style=xmlstyle, caption=Custom styles]
+<!-- path: app/src/main/res/values/styles.xml -->
+<resources>
+    <!-- Button style -->
+    <style name="PrimaryButton" parent="Widget.MaterialComponents.Button">
+        <item name="android:textColor">@color/white</item>
+        <item name="backgroundTint">@color/colorPrimary</item>
+        <item name="android:padding">16dp</item>
+    </style>
+
+    <!-- Title text style -->
+    <style name="TitleText">
+        <item name="android:textSize">24sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <!-- EditText style -->
+    <style name="FormEditText">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">12dp</item>
+        <item name="android:background">@drawable/edittext_background</item>
+    </style>
+</resources>
+
+<!-- Usage in XML -->
+<Button
+    style="@style/PrimaryButton"
+    android:text="Save" />
+
+<TextView
+    style="@style/TitleText"
+    android:text="Hotels" />
+\end{lstlisting}
+
+\chapter{AndroidManifest.xml Essentials}
+\index{Manifest}
+
+\section{Complete Manifest Example}
+
+\begin{lstlisting}[style=xmlstyle, caption=AndroidManifest.xml, label=lst:manifest]
+<!-- path: app/src/main/AndroidManifest.xml -->
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Permissions -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Base.Theme.HotelAppRef"
+        tools:targetApi="31">
+
+        <!-- Main Activity (Launcher) -->
+        <activity
+            android:name=".MainActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- Other Activities -->
+        <activity
+            android:name=".AddHotelActivity"
+            android:exported="false"
+            android:parentActivityName=".MainActivity"
+            android:windowSoftInputMode="adjustResize">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
+
+        <activity
+            android:name=".HotelDetailsActivity"
+            android:exported="false"
+            android:parentActivityName=".MainActivity" />
+
+    </application>
+
+</manifest>
+\end{lstlisting}
+
+\section{Key Manifest Attributes}
+
+\begin{itemize}
+    \item \texttt{android:name}: Activity class name (dot prefix for same package)
+    \item \texttt{android:exported}: Whether other apps can start this activity
+    \item \texttt{android:label}: Activity title (shown in action bar)
+    \item \texttt{android:theme}: Activity-specific theme
+    \item \texttt{android:parentActivityName}: Enables up navigation
+    \item \texttt{android:windowSoftInputMode}: How keyboard affects layout
+    \item \texttt{android:screenOrientation}: Lock orientation (portrait/landscape)
+    \item \texttt{android:configChanges}: Handle config changes manually
+\end{itemize}
+
+\part{Midterm Hotel App Walkthrough}
+
+\chapter{Hotel App Requirements}
+
+The Hotel App manages a list of hotels in Lebanon. Users can:
+
+\begin{enumerate}
+    \item View list of hotels (RecyclerView)
+    \item Add new hotels (form with validation)
+    \item View hotel details
+    \item Persist data (Room database)
+\end{enumerate}
+
+\section{Data Model}
+
+Hotel entity with fields:
+\begin{itemize}
+    \item \textbf{id}: Unique identifier (auto-generated)
+    \item \textbf{name}: Hotel name (required)
+    \item \textbf{phone}: Contact number (required)
+    \item \textbf{website}: Hotel website
+    \item \textbf{location}: Physical address (required)
+    \item \textbf{nearby}: Nearby attractions
+    \item \textbf{food}: Dining options
+    \item \textbf{imageResource}: Icon resource ID
+\end{itemize}
+
+\chapter{MainActivity Implementation}
+
+\section{Complete Code}
+
+\begin{lstlisting}[style=javastyle, caption=MainActivity.java, label=lst:mainactivity]
+// path: app/src/main/java/com/example/hotelappref/MainActivity.java
+package com.example.hotelappref;
+
+import android.content.Intent;
+import android.os.Bundle;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import com.example.hotelappref.adapters.HotelAdapter;
+import com.example.hotelappref.database.AppDatabase;
+import com.example.hotelappref.database.HotelDao;
+import com.example.hotelappref.databinding.ActivityMainBinding;
+import com.example.hotelappref.models.Hotel;
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * MainActivity - The main screen displaying the list of hotels.
+ *
+ * KEY CONCEPTS:
+ * - ViewBinding: Type-safe way to access views (no findViewById!)
+ * - RecyclerView: Efficient list display with ViewHolder pattern
+ * - Room Database: Persistent storage for hotel data
+ * - ActivityResultLauncher: Modern way to handle activity results
+ */
+public class MainActivity extends AppCompatActivity {
+
+    private ActivityMainBinding binding;
+    private HotelAdapter adapter;
+    private List<Hotel> hotelList;
+    private AppDatabase database;
+    private HotelDao hotelDao;
+    private ActivityResultLauncher<Intent> addHotelLauncher;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        // ViewBinding setup
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+
+        // Action bar
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle("Hotels in Lebanon");
+        }
+
+        // Initialize database
+        database = AppDatabase.getInstance(this);
+        hotelDao = database.hotelDao();
+        AppDatabase.populateInitialData(this);
+
+        // Initialize Activity Result Launcher
+        initializeAddHotelLauncher();
+
+        // Setup RecyclerView
+        binding.recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        binding.recyclerView.setHasFixedSize(true);
+
+        // Load data
+        loadHotelsFromDatabase();
+
+        // Setup adapter
+        adapter = new HotelAdapter(this, hotelList);
+        binding.recyclerView.setAdapter(adapter);
+
+        // FAB click listener
+        binding.fabAddHotel.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, AddHotelActivity.class);
+            addHotelLauncher.launch(intent);
+        });
+    }
+
+    private void initializeAddHotelLauncher() {
+        addHotelLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                if (result.getResultCode() == RESULT_OK) {
+                    loadHotelsFromDatabase();
+                    adapter.notifyDataSetChanged();
+                    if (hotelList.size() > 0) {
+                        binding.recyclerView.smoothScrollToPosition(hotelList.size() - 1);
+                    }
+                }
+            }
+        );
+    }
+
+    private void loadHotelsFromDatabase() {
+        hotelList = new ArrayList<>(hotelDao.getAllHotels());
+    }
+}
+\end{lstlisting}
+
+\section{Why It Works}
+
+\begin{enumerate}
+    \item \textbf{ViewBinding} eliminates findViewById and provides type safety
+    \item \textbf{Room Database} persists data across app restarts
+    \item \textbf{RecyclerView} efficiently displays large lists
+    \item \textbf{ActivityResultLauncher} replaces deprecated startActivityForResult
+    \item \textbf{Singleton pattern} ensures one database instance
+\end{enumerate}
+
+\chapter{AddHotelActivity Implementation}
+
+\begin{lstlisting}[style=javastyle, caption=AddHotelActivity.java, label=lst:addhotelactivity]
+// path: app/src/main/java/com/example/hotelappref/AddHotelActivity.java
+package com.example.hotelappref;
+
+import android.os.Bundle;
+import android.text.TextUtils;
+import android.widget.Toast;
+import androidx.appcompat.app.AppCompatActivity;
+import com.example.hotelappref.database.AppDatabase;
+import com.example.hotelappref.database.HotelDao;
+import com.example.hotelappref.databinding.ActivityAddHotelBinding;
+import com.example.hotelappref.models.Hotel;
+
+public class AddHotelActivity extends AppCompatActivity {
+
+    private ActivityAddHotelBinding binding;
+    private HotelDao hotelDao;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        binding = ActivityAddHotelBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+
+        // Initialize database
+        AppDatabase database = AppDatabase.getInstance(this);
+        hotelDao = database.hotelDao();
+
+        // Setup action bar
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setTitle("Add New Hotel");
+        }
+
+        // Button listeners
+        binding.btnSave.setOnClickListener(v -> saveHotel());
+        binding.btnCancel.setOnClickListener(v -> {
+            setResult(RESULT_CANCELED);
+            finish();
+        });
+    }
+
+    private void saveHotel() {
+        // Get inputs
+        String name = binding.editName.getText().toString().trim();
+        String phone = binding.editPhone.getText().toString().trim();
+        String website = binding.editWebsite.getText().toString().trim();
+        String location = binding.editLocation.getText().toString().trim();
+        String nearby = binding.editNearby.getText().toString().trim();
+        String food = binding.editFood.getText().toString().trim();
+
+        // Validation
+        if (TextUtils.isEmpty(name)) {
+            binding.editName.setError("Name is required");
+            binding.editName.requestFocus();
+            return;
+        }
+
+        if (TextUtils.isEmpty(phone)) {
+            binding.editPhone.setError("Phone is required");
+            binding.editPhone.requestFocus();
+            return;
+        }
+
+        if (TextUtils.isEmpty(location)) {
+            binding.editLocation.setError("Location is required");
+            binding.editLocation.requestFocus();
+            return;
+        }
+
+        // Defaults for optional fields
+        if (TextUtils.isEmpty(website)) website = "www.hotel.com";
+        if (TextUtils.isEmpty(nearby)) nearby = "No nearby attractions listed";
+        if (TextUtils.isEmpty(food)) food = "Restaurant available";
+
+        // Create and save hotel
+        Hotel newHotel = new Hotel(name, phone, website, location, nearby, food,
+            R.mipmap.ic_launcher);
+        hotelDao.insert(newHotel);
+
+        // Return success
+        setResult(RESULT_OK);
+        Toast.makeText(this, "Hotel added successfully!", Toast.LENGTH_SHORT).show();
+        finish();
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
+}
+\end{lstlisting}
+
+\chapter{Common Exam Tweaks}
+
+\section{Add a New Field}
+
+\textbf{Example:} Add a "rating" field to Hotel
+
+\begin{enumerate}
+    \item Update Hotel model:
+\begin{lstlisting}[style=javastyle]
+private float rating;
+
+public float getRating() { return rating; }
+public void setRating(float rating) { this.rating = rating; }
+\end{lstlisting}
+
+    \item Update database version in AppDatabase:
+\begin{lstlisting}[style=javastyle]
+@Database(entities = {Hotel.class}, version = 2)  // Increment version
+\end{lstlisting}
+
+    \item Add to layout XML:
+\begin{lstlisting}[style=xmlstyle]
+<RatingBar
+    android:id="@+id/ratingBar"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content" />
+\end{lstlisting}
+
+    \item Update AddHotelActivity:
+\begin{lstlisting}[style=javastyle]
+float rating = binding.ratingBar.getRating();
+hotel.setRating(rating);
+\end{lstlisting}
+\end{enumerate}
+
+\section{Add Search Functionality}
+
+\begin{enumerate}
+    \item Add SearchView to menu:
+\begin{lstlisting}[style=xmlstyle]
+<item
+    android:id="@+id/action_search"
+    android:title="Search"
+    app:showAsAction="ifRoom|collapseActionView"
+    app:actionViewClass="androidx.appcompat.widget.SearchView" />
+\end{lstlisting}
+
+    \item Handle in MainActivity:
+\begin{lstlisting}[style=javastyle]
+@Override
+public boolean onCreateOptionsMenu(Menu menu) {
+    getMenuInflater().inflate(R.menu.main_menu, menu);
+
+    MenuItem searchItem = menu.findItem(R.id.action_search);
+    SearchView searchView = (SearchView) searchItem.getActionView();
+
+    searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+        @Override
+        public boolean onQueryTextSubmit(String query) {
+            searchHotels(query);
+            return true;
+        }
+
+        @Override
+        public boolean onQueryTextChange(String newText) {
+            searchHotels(newText);
+            return true;
+        }
+    });
+
+    return true;
+}
+
+private void searchHotels(String query) {
+    if (TextUtils.isEmpty(query)) {
+        hotelList = new ArrayList<>(hotelDao.getAllHotels());
+    } else {
+        hotelList = new ArrayList<>(hotelDao.searchHotelsByName(query));
+    }
+    adapter = new HotelAdapter(this, hotelList);
+    binding.recyclerView.setAdapter(adapter);
+}
+\end{lstlisting}
+\end{enumerate}
+
+\section{Add Delete Functionality}
+
+\begin{enumerate}
+    \item Add delete method in HotelAdapter:
+\begin{lstlisting}[style=javastyle]
+public void bind(final Hotel hotel) {
+    // ... existing binding code
+
+    binding.getRoot().setOnLongClickListener(v -> {
+        new AlertDialog.Builder(context)
+            .setTitle("Delete Hotel")
+            .setMessage("Delete " + hotel.getName() + "?")
+            .setPositiveButton("Delete", (dialog, which) -> {
+                hotelDao.delete(hotel);
+                hotelList.remove(getAdapterPosition());
+                notifyItemRemoved(getAdapterPosition());
+                Toast.makeText(context, "Deleted", Toast.LENGTH_SHORT).show();
+            })
+            .setNegativeButton("Cancel", null)
+            .show();
+        return true;
+    });
+}
+\end{lstlisting}
+\end{enumerate}
+
+\part{Labs Cheatsheet}
+
+\chapter{FriendsList Lab}
+
+\section{Requirements}
+
+Build an app to manage favorite books with:
+\begin{itemize}
+    \item ListView showing books (title + genre)
+    \item FAB to add books via explicit intent
+    \item Form with EditText (title) and Spinner (genre)
+    \item Form validation (non-empty fields)
+    \item Click book to share via WhatsApp (implicit intent)
+\end{itemize}
+
+\section{Key Code Snippets}
+
+\subsection{Spinner Setup}
+
+\begin{lstlisting}[style=javastyle, caption=Spinner in Activity]
+// In layout XML
+<Spinner
+    android:id="@+id/spinnerGenre"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" />
+
+// In Activity
+Spinner spinner = findViewById(R.id.spinnerGenre);
+ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
+    this,
+    R.array.genres_array,  // Define in strings.xml
+    android.R.layout.simple_spinner_item
+);
+adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+spinner.setAdapter(adapter);
+
+// Get selected value
+String genre = spinner.getSelectedItem().toString();
+\end{lstlisting}
+
+\subsection{Implicit Intent for WhatsApp}
+
+\begin{lstlisting}[style=javastyle, caption=Share to WhatsApp]
+String phoneNumber = "+96176867167";
+String message = "Check out this book: " + bookTitle + " - " + genre;
+
+Intent intent = new Intent(Intent.ACTION_VIEW);
+intent.setData(Uri.parse("https://api.whatsapp.com/send?phone=" + phoneNumber +
+    "&text=" + Uri.encode(message)));
+startActivity(intent);
+\end{lstlisting}
+
+\subsection{ListView Setup}
+
+\begin{lstlisting}[style=javastyle, caption=ListView with ArrayAdapter]
+ListView listView = findViewById(R.id.listView);
+List<String> books = new ArrayList<>();
+books.add("Book Title - Genre");
+
+ArrayAdapter<String> adapter = new ArrayAdapter<>(
+    this,
+    android.R.layout.simple_list_item_1,
+    books
+);
+listView.setAdapter(adapter);
+
+// Handle clicks
+listView.setOnItemClickListener((parent, view, position, id) -> {
+    String selectedBook = books.get(position);
+    // Share to WhatsApp
+});
+\end{lstlisting}
+
+\part{Debugging \& Gotchas}
+
+\chapter{Common Gradle Errors}
+
+\section{Gradle Sync Failed}
+
+\textbf{Solution:}
+\begin{enumerate}
+    \item File → Invalidate Caches → Restart
+    \item Delete \texttt{.gradle} and \texttt{.idea} folders
+    \item File → Sync Project with Gradle Files
+\end{enumerate}
+
+\section{Failed to Resolve Dependency}
+
+\textbf{Solution:}
+\begin{itemize}
+    \item Check internet connection
+    \item Verify dependency version exists
+    \item Add/verify repositories in \texttt{settings.gradle.kts}:
+\begin{lstlisting}[style=gradlestyle]
+repositories {
+    google()
+    mavenCentral()
+}
+\end{lstlisting}
+\end{itemize}
+
+\chapter{Common Manifest Errors}
+
+\section{Activity Not Registered}
+
+\textbf{Error:} Unable to find explicit activity class
+
+\textbf{Solution:} Add activity to AndroidManifest.xml:
+\begin{lstlisting}[style=xmlstyle]
+<activity android:name=".YourActivity" />
+\end{lstlisting}
+
+\section{Permission Denied}
+
+\textbf{Error:} java.lang.SecurityException: Permission denied
+
+\textbf{Solution:}
+\begin{enumerate}
+    \item Add permission to Manifest
+    \item Request runtime permission (dangerous permissions)
+\end{enumerate}
+
+\chapter{Common Resource Errors}
+
+\section{Resource Not Found}
+
+\textbf{Error:} android.content.res.Resources\$NotFoundException
+
+\textbf{Causes:}
+\begin{itemize}
+    \item Typo in resource ID (\texttt{R.id.textview} vs \texttt{R.id.textView})
+    \item Resource in wrong folder
+    \item Invalid XML
+\end{itemize}
+
+\textbf{Solution:}
+\begin{enumerate}
+    \item Build → Clean Project
+    \item Build → Rebuild Project
+    \item Verify resource name matches exactly
+\end{enumerate}
+
+\section{InflateException}
+
+\textbf{Error:} android.view.InflateException: Binary XML file line X
+
+\textbf{Causes:}
+\begin{itemize}
+    \item Invalid XML syntax
+    \item Missing required attribute
+    \item Wrong parent class in custom view
+\end{itemize}
+
+\textbf{Solution:}
+\begin{itemize}
+    \item Check Logcat for detailed error
+    \item Validate XML (look for red underlines)
+    \item Check line number mentioned in error
+\end{itemize}
+
+\chapter{Common Runtime Errors}
+
+\section{NullPointerException}
+
+\textbf{Most common causes:}
+\begin{enumerate}
+    \item View not initialized:
+\begin{lstlisting}[style=javastyle]
+// Wrong: textView not initialized
+textView.setText("text");  // NPE!
+
+// Right:
+TextView textView = findViewById(R.id.textView);
+textView.setText("text");
+\end{lstlisting}
+
+    \item Intent extra not provided:
+\begin{lstlisting}[style=javastyle]
+// Check before using
+String name = getIntent().getStringExtra("name");
+if (name != null) {
+    // Use name
+}
+\end{lstlisting}
+
+    \item Database not initialized:
+\begin{lstlisting}[style=javastyle]
+// Initialize first
+database = AppDatabase.getInstance(this);
+hotelDao = database.hotelDao();
+\end{lstlisting}
+\end{enumerate}
+
+\section{App Crashes on Rotation}
+
+\textbf{Cause:} Activity recreated, state lost
+
+\textbf{Solution:} Save and restore state:
+\begin{lstlisting}[style=javastyle]
+@Override
+protected void onSaveInstanceState(Bundle outState) {
+    super.onSaveInstanceState(outState);
+    outState.putString("data", myData);
+}
+
+@Override
+protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    if (savedInstanceState != null) {
+        myData = savedInstanceState.getString("data");
+    }
+}
+\end{lstlisting}
+
+\chapter{Debugging Tips}
+
+\section{Using Logcat Effectively}
+
+\begin{lstlisting}[style=javastyle]
+private static final String TAG = "MainActivity";
+
+// Debug info
+Log.d(TAG, "onCreate: hotelList size = " + hotelList.size());
+
+// Errors
+try {
+    // risky operation
+} catch (Exception e) {
+    Log.e(TAG, "Error: " + e.getMessage(), e);
+}
+\end{lstlisting}
+
+\section{Toast for Quick Debugging}
+
+\begin{lstlisting}[style=javastyle]
+Toast.makeText(this, "Variable value: " + myVar, Toast.LENGTH_SHORT).show();
+\end{lstlisting}
+
+\section{Breakpoints}
+
+\begin{enumerate}
+    \item Click left gutter to set breakpoint
+    \item Debug button (not Run)
+    \item Inspect variables when paused
+    \item Step through code (F8, F7)
+\end{enumerate}
+
+\appendix
+
+\chapter{File Placement Map}
+
+\begin{longtable}{|p{6cm}|p{9cm}|}
+\hline
+\textbf{File Type} & \textbf{Location} \\
+\hline
+Activity Java class & \texttt{app/src/main/java/com/example/hotelappref/} \\
+\hline
+Model class & \texttt{app/src/main/java/.../models/} \\
+\hline
+Adapter class & \texttt{app/src/main/java/.../adapters/} \\
+\hline
+DAO interface & \texttt{app/src/main/java/.../database/} \\
+\hline
+Database class & \texttt{app/src/main/java/.../database/} \\
+\hline
+Layout XML & \texttt{app/src/main/res/layout/} \\
+\hline
+String resources & \texttt{app/src/main/res/values/strings.xml} \\
+\hline
+Color resources & \texttt{app/src/main/res/values/colors.xml} \\
+\hline
+Theme/Style & \texttt{app/src/main/res/values/themes.xml} \\
+\hline
+Dimensions & \texttt{app/src/main/res/values/dimens.xml} \\
+\hline
+Menu XML & \texttt{app/src/main/res/menu/} \\
+\hline
+App icons (mdpi) & \texttt{app/src/main/res/mipmap-mdpi/} \\
+\hline
+App icons (hdpi) & \texttt{app/src/main/res/mipmap-hdpi/} \\
+\hline
+App icons (xhdpi) & \texttt{app/src/main/res/mipmap-xhdpi/} \\
+\hline
+App icons (xxhdpi) & \texttt{app/src/main/res/mipmap-xxhdpi/} \\
+\hline
+App icons (xxxhdpi) & \texttt{app/src/main/res/mipmap-xxxhdpi/} \\
+\hline
+Drawable images & \texttt{app/src/main/res/drawable/} \\
+\hline
+Manifest & \texttt{app/src/main/AndroidManifest.xml} \\
+\hline
+App Gradle & \texttt{app/build.gradle.kts} \\
+\hline
+Project Gradle & \texttt{build.gradle.kts} \\
+\hline
+Settings Gradle & \texttt{settings.gradle.kts} \\
+\hline
+Gradle wrapper & \texttt{gradle/wrapper/gradle-wrapper.properties} \\
+\hline
+ProGuard rules & \texttt{app/proguard-rules.pro} \\
+\hline
+Unit tests & \texttt{app/src/test/java/} \\
+\hline
+Instrumented tests & \texttt{app/src/androidTest/java/} \\
+\hline
+\end{longtable}
+
+\chapter{Command Snippets}
+
+\section{ADB Commands}
+\index{adb}
+
+\begin{lstlisting}[language=bash]
+# List devices
+adb devices
+
+# Install APK
+adb install app-debug.apk
+
+# Uninstall app
+adb uninstall com.example.hotelappref
+
+# View logcat
+adb logcat
+
+# Clear logcat
+adb logcat -c
+
+# Take screenshot
+adb shell screencap /sdcard/screen.png
+adb pull /sdcard/screen.png
+
+# Pull database file
+adb pull /data/data/com.example.hotelappref/databases/hotel_database ./
+\end{lstlisting}
+
+\section{Gradlew Commands}
+
+\begin{lstlisting}[language=bash]
+# Clean build
+./gradlew clean
+
+# Build debug APK
+./gradlew assembleDebug
+
+# Build release APK
+./gradlew assembleRelease
+
+# Install debug
+./gradlew installDebug
+
+# Run tests
+./gradlew test
+
+# Check dependencies
+./gradlew dependencies
+\end{lstlisting}
+
+\printglossaries
+\printindex
+
+\end{document}
