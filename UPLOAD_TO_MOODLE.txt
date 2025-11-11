@@ -1,0 +1,156 @@
+================================================================================
+📤 WHAT TO UPLOAD TO MOODLE - "Graded Lab - Student References"
+================================================================================
+
+🎯 DEADLINE: Monday, 17 November 2025, 12:00 AM (5 days!)
+
+================================================================================
+📦 UPLOAD THESE FILES (In Priority Order):
+================================================================================
+
+1. ⭐⭐⭐⭐⭐ ANDROID_CHEAT_SHEET.md (14 KB) - MOST IMPORTANT!
+   ├─ 10 copy-paste patterns (RecyclerView, Intent, Validation, Room, etc.)
+   ├─ File location map
+   ├─ Common XML attributes
+   └─ Quick search keywords
+
+2. ⭐⭐⭐⭐⭐ EXAM_STRATEGY.md (6.5 KB) - YOUR SURVIVAL GUIDE!
+   ├─ Step-by-step exam workflow
+   ├─ What to search for
+   ├─ How to copy and adapt code
+   ├─ Time allocation (2 hours)
+   └─ Common mistakes to avoid
+
+3. ⭐⭐⭐⭐ HotelAppRef.zip (118 KB) - WORKING CODE EXAMPLES
+   ├─ Complete Android project
+   ├─ Room database implementation
+   ├─ RecyclerView with adapter
+   ├─ Form validation
+   ├─ Open in Android Studio during exam
+   └─ Copy entire files and adapt
+
+4. ⭐⭐⭐⭐ README.md (11 KB) - PROJECT STRUCTURE REFERENCE
+   ├─ Where to put each file type
+   ├─ Quick start guide
+   ├─ Common exam tasks
+   └─ Troubleshooting
+
+5. ⭐⭐⭐⭐⭐ android_exam_reference.pdf - COMPREHENSIVE REFERENCE
+   ├─ YOU NEED TO COMPILE THIS YOURSELF (see below)
+   ├─ 189 pages covering ALL Android patterns
+   ├─ Searchable (Ctrl+F)
+   ├─ Complete code examples
+   └─ File paths for every snippet
+
+================================================================================
+🔨 HOW TO COMPILE THE PDF (Do this on your computer):
+================================================================================
+
+Option 1: If you have LaTeX installed
+---------------------------------------
+cd /path/to/mobile-dev-course/reference
+pdflatex android_exam_reference.tex
+pdflatex android_exam_reference.tex  # Run twice for Table of Contents
+
+Option 2: Online LaTeX compiler (if no LaTeX)
+---------------------------------------
+1. Go to: https://www.overleaf.com/
+2. Create free account
+3. Upload android_exam_reference.tex from reference/ folder
+4. Click "Compile"
+5. Download the PDF
+
+Option 3: Install LaTeX
+---------------------------------------
+Windows: Download MiKTeX from https://miktex.org/
+Mac: Download MacTeX from https://www.tug.org/mactex/
+Linux: sudo apt-get install texlive-full
+
+IMPORTANT: If you can't compile PDF, that's okay!
+The CHEAT SHEET and EXAM STRATEGY are MORE than enough for the exam!
+
+================================================================================
+📱 DURING THE EXAM - WHAT TO HAVE OPEN:
+================================================================================
+
+Priority 1: ANDROID_CHEAT_SHEET.md
+├─ Open in text editor or browser
+├─ Ctrl+F to search for patterns
+└─ Copy entire patterns and adapt
+
+Priority 2: EXAM_STRATEGY.md
+├─ Follow the step-by-step workflow
+├─ Use the search keyword table
+└─ Check time allocation
+
+Priority 3: HotelAppRef (unzipped, opened in Android Studio)
+├─ Find similar pattern
+├─ Copy entire Java files
+├─ Modify package names and class names
+└─ Test immediately
+
+Priority 4: README.md (if confused about file locations)
+Priority 5: android_exam_reference.pdf (if you compiled it)
+
+================================================================================
+🎯 QUICK EXAM STRATEGY:
+================================================================================
+
+1. READ QUESTION (What do they want? List? Form? Database?)
+2. SEARCH CHEAT SHEET (Find matching pattern number)
+3. COPY FROM HOTELAPPREF (Find similar file)
+4. ADAPT (Change package names, class names, field names)
+5. TEST (Run app, check Logcat if errors)
+6. SUBMIT (Even if not perfect!)
+
+================================================================================
+⚠️ CRITICAL REMINDERS:
+================================================================================
+
+✅ You CAN copy everything - just adapt names!
+✅ Package names must match everywhere
+✅ Register activities in AndroidManifest.xml
+✅ Test after each major change
+✅ Use Ctrl+F to search references
+✅ Partial credit > No credit
+✅ Submit what you have, even if incomplete
+
+❌ Don't waste time understanding deeply
+❌ Don't try to write from scratch
+❌ Don't forget to change package names
+❌ Don't panic - everything is in references
+
+================================================================================
+📋 UPLOAD CHECKLIST:
+================================================================================
+
+Before uploading to Moodle:
+[ ] ANDROID_CHEAT_SHEET.md
+[ ] EXAM_STRATEGY.md
+[ ] HotelAppRef.zip
+[ ] README.md
+[ ] android_exam_reference.pdf (if compiled)
+
+Upload to: COMP413 - A_Fall2025 > General > Graded Lab - Student References
+
+================================================================================
+💡 REMEMBER:
+================================================================================
+
+"You don't need to memorize anything!
+Just know WHERE to find it and HOW to copy it!
+Search → Copy → Adapt → Test → Submit!"
+
+================================================================================
+🚀 YOU GOT THIS! GOOD LUCK! 🎓
+================================================================================
+
+Questions? Check:
+- EXAM_STRATEGY.md (page 1: What to do during exam)
+- ANDROID_CHEAT_SHEET.md (Pattern reference)
+- README.md (File paths)
+
+DEADLINE: November 17, 2025, 12:00 AM
+TIME REMAINING: ~5 days
+
+Don't wait! Upload now! ⚡
