@@ -1,3 +1,5 @@
+
+Graded Lab
 Build an Android app that allows the user to manage a list of their favorite books. The app should enable adding new books via a form screen, choosing genre from a Spinner, and showing the list in a ListView. On clicking a book, the user should be able to share it WhatsApp (implicit intent).
 
 App Components & Requirements:

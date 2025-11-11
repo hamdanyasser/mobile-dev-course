@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+<string-array name="genre_array">
+    <item>Novel</item>
+    <item>Biography</item>
+    <item>Science</item>
+    <item>Other</item>
+</string-array>
+</resources>
