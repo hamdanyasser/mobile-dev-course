@@ -1,0 +1,31 @@
+Build an Android app that allows the user to manage a list of their favorite books. The app should enable adding new books via a form screen, choosing genre from a Spinner, and showing the list in a ListView. On clicking a book, the user should be able to share it WhatsApp (implicit intent).
+
+App Components & Requirements:
+1. MainActivity.java
+Contains a ListView showing the list of favorite books (Book Title + Genre).
+
+A FloatingActionButton (FAB) opens a new screen to add a book (via explicit intent).
+
+On return from the add screen, the new book is added to the ListView.
+
+2. AddBookActivity.java / AddBookActivity.kt
+Form screen with:
+
+EditText for Book Title
+
+Spinner for Genre (e.g., Novel, Biography, Science, Other)
+
+Button to submit
+
+On submit, the book info is passed back using activity result. (Make sure that book title and genre are not empty , otherwise display a toast message to the user to fill before submit )
+
+3. Book Click Behavior (ListView item click)
+On clicking a book in the list, the app sends an implicit intent to:
+
+Open WhatsApp with pre-filled subject and body to share the book to the number 76867167:
+
+Subject: “Check out this book”
+
+Body: “You should read [Book Title] – it’s a great [Genre]!”
+
+Note: you have to use strings.xml for the titles , in addition to using colors.xml for the palleted colors you will use.
