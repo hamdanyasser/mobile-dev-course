@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">HotelApp</string>
+    <string name="hotels_title">Hotels</string>
+    <string name="hotel_details">Hotel Details</string>
+    <string name="phone">Phone</string>
+    <string name="website">Website</string>
+    <string name="location">Location</string>
+    <string name="nearby">Nearby Attractions</string>
+    <string name="food">Dining</string>
+    <string name="call_now">Call Now</string>
+    <string name="visit_website">Visit Website</string>
+    <string name="open_maps">Open Maps</string>
+</resources>
